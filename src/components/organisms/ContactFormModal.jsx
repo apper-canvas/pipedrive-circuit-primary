@@ -146,22 +146,19 @@ const contactData = {
 <div className="grid grid-cols-2 gap-4">
                 <FormField
                   label="First Name"
-                  name="firstName"
-value={formData.first_name_c}
+name="first_name_c"
+                  value={formData.first_name_c}
                   onChange={handleChange}
                   error={errors.first_name_c}
-                  error={errors.firstName}
                   placeholder="John"
                   required
                 />
                 <FormField
-                  label="Last Name"
-name="last_name_c"
+label="Last Name"
+                  name="last_name_c"
                   value={formData.last_name_c}
                   onChange={handleChange}
                   error={errors.last_name_c}
-                  onChange={handleChange}
-                  error={errors.lastName}
                   placeholder="Doe"
                   required
                 />
@@ -170,10 +167,8 @@ name="last_name_c"
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   label="Email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
 name="email_c"
+                  type="email"
                   value={formData.email_c}
                   onChange={handleChange}
                   error={errors.email_c}
@@ -183,9 +178,8 @@ name="email_c"
 
                 <FormField
                   label="Phone"
-                  name="phone"
-                  type="tel"
 name="phone_c"
+                  type="tel"
                   value={formData.phone_c}
                   onChange={handleChange}
                   placeholder="+1 (555) 123-4567"
@@ -194,9 +188,8 @@ name="phone_c"
 <FormField
               label="Job Title"
               id="jobTitle"
-              name="jobTitle"
-              type="text"
 name="job_title_c"
+              type="text"
               value={formData.job_title_c}
               onChange={handleChange}
               placeholder="e.g., Chief Technology Officer"
@@ -205,10 +198,9 @@ name="job_title_c"
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 label="City"
-                id="city"
-                name="city"
+id="city"
+                name="city_c"
                 type="text"
-name="city_c"
                 value={formData.city_c}
                 onChange={handleChange}
                 placeholder="e.g., San Francisco"
@@ -216,9 +208,8 @@ name="city_c"
               <FormField
                 label="State"
                 id="state"
-                name="state"
-                type="text"
 name="state_c"
+                type="text"
                 value={formData.state_c}
                 onChange={handleChange}
                 placeholder="e.g., California"
@@ -228,9 +219,8 @@ name="state_c"
             <FormField
               label="Pin Code"
               id="pinCode"
-              name="pinCode"
-              type="text"
 name="pin_code_c"
+              type="text"
               value={formData.pin_code_c}
               onChange={handleChange}
               placeholder="e.g., 94102"
@@ -240,9 +230,8 @@ name="pin_code_c"
             <FormField
               label="LinkedIn Profile URL"
               id="linkedinUrl"
-              name="linkedinUrl"
-              type="url"
 name="linkedin_url_c"
+              type="url"
               value={formData.linkedin_url_c}
               onChange={handleChange}
               placeholder="e.g., https://linkedin.com/in/username"
@@ -250,8 +239,6 @@ name="linkedin_url_c"
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   label="Company"
-                  name="company"
-                  value={formData.company}
 name="company_c"
                   value={formData.company_c}
                   onChange={handleChange}
@@ -262,11 +249,9 @@ name="company_c"
 
                 <FormField
                   label="Status"
-                  name="status"
 name="status_c"
                   type="select"
                   value={formData.status_c}
-                  onChange={handleChange}
                   onChange={handleChange}
                   required
                   options={statusOptions}
@@ -275,7 +260,6 @@ name="status_c"
 
               <FormField
                 label="Tags"
-                name="tags"
 name="tags_c"
                 value={formData.tags_c}
                 onChange={handleChange}
@@ -284,9 +268,8 @@ name="tags_c"
 
               <FormField
                 label="Notes"
-                name="notes"
-                type="textarea"
 name="notes_c"
+                type="textarea"
                 value={formData.notes_c}
                 onChange={handleChange}
                 placeholder="Add any relevant notes about this contact..."
