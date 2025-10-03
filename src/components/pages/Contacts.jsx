@@ -52,15 +52,16 @@ const Contacts = () => {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (contact) =>
-contact.firstName.toLowerCase().includes(query) ||
-          contact.lastName.toLowerCase().includes(query) ||
-          contact.email.toLowerCase().includes(query) ||
-          contact.company.toLowerCase().includes(query)
+contact.first_name_c?.toLowerCase().includes(query) ||
+          contact.last_name_c?.toLowerCase().includes(query) ||
+          contact.email_c?.toLowerCase().includes(query) ||
+          contact.company_c?.toLowerCase().includes(query) ||
+          contact.Name?.toLowerCase().includes(query)
       );
     }
 
     if (statusFilter !== "all") {
-      filtered = filtered.filter((contact) => contact.status === statusFilter);
+filtered = filtered.filter((contact) => contact.status_c === statusFilter);
     }
 
     setFilteredContacts(filtered);

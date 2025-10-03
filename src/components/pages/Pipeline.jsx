@@ -32,7 +32,7 @@ const Pipeline = () => {
     loadPipelineData();
   }, []);
 
-  const loadPipelineData = async () => {
+const loadPipelineData = async () => {
     setLoading(true);
     setError("");
     try {
@@ -40,7 +40,7 @@ const Pipeline = () => {
         dealService.getAll(),
         contactService.getAll()
       ]);
-      setDeals(dealsData.filter((d) => !d.stage.includes("lost")));
+      setDeals(dealsData.filter((d) => !d.stage_c?.includes("lost")));
       setContacts(contactsData);
     } catch (err) {
       setError(err.message || "Failed to load pipeline data");
@@ -64,10 +64,10 @@ const Pipeline = () => {
     }
 
     try {
-      await dealService.updateStage(draggedDeal.Id, stageId);
+await dealService.updateStage(draggedDeal.Id, stageId);
       setDeals((prev) =>
         prev.map((d) =>
-          d.Id === draggedDeal.Id ? { ...d, stage: stageId } : d
+          d.Id === draggedDeal.Id ? { ...d, stage_c: stageId } : d
         )
       );
       toast.success("Deal stage updated");
@@ -100,7 +100,7 @@ const Pipeline = () => {
   };
 
   const getContactForDeal = (deal) => {
-    return contacts.find((c) => c.Id === deal.contactId);
+return contacts.find((c) => c.Id === deal.contact_id_c?.Id || deal.contact_id_c);
   };
 
   const getDealsByStage = (stageId) => {

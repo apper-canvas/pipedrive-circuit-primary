@@ -82,12 +82,12 @@ const ContactModal = ({ contact, onClose }) => {
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                   <span className="text-2xl font-bold">
-                    {contact.name.charAt(0).toUpperCase()}
+{contact.Name?.charAt(0).toUpperCase() || 'C'}
                   </span>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">{contact.name}</h2>
-                  <p className="text-white/90">{contact.company}</p>
+<h2 className="text-2xl font-bold">{contact.Name}</h2>
+                  <p className="text-white/90">{contact.company_c}</p>
                 </div>
               </div>
               <button
@@ -130,7 +130,7 @@ const ContactModal = ({ contact, onClose }) => {
                         </label>
                         <div className="flex items-center gap-2 text-gray-900">
                           <ApperIcon name="Mail" size={16} className="text-primary" />
-                          <span>{contact.email}</span>
+<span>{contact.email_c}</span>
                         </div>
                       </div>
                       <div>
@@ -139,68 +139,68 @@ const ContactModal = ({ contact, onClose }) => {
                         </label>
                         <div className="flex items-center gap-2 text-gray-900">
                           <ApperIcon name="Phone" size={16} className="text-primary" />
-                          <span>{contact.phone}</span>
+<span>{contact.phone_c}</span>
                         </div>
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-600 block mb-1">
                           Status
                         </label>
-                        <Badge variant="success">{contact.status}</Badge>
+<Badge variant="success">{contact.status_c}</Badge>
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-600 block mb-1">
                           Last Contact
                         </label>
                         <span className="text-gray-900">
-                          {format(new Date(contact.lastContact), "MMM d, yyyy")}
+{format(new Date(contact.last_contact_c), "MMM d, yyyy")}
                         </span>
                       </div>
 </div>
 
                     {/* Professional Information */}
-                    {(contact.jobTitle || contact.city || contact.state || contact.pinCode || contact.linkedinUrl) && (
+{(contact.job_title_c || contact.city_c || contact.state_c || contact.pin_code_c || contact.linkedin_url_c) && (
                       <div className="space-y-4">
                         <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
                           Professional Information
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {contact.jobTitle && (
+                          {contact.job_title_c && (
                             <div className="flex items-start space-x-3">
                               <ApperIcon name="Building2" size={18} className="text-gray-400 mt-0.5" />
                               <div>
                                 <p className="text-xs text-gray-500">Job Title</p>
-                                <p className="text-sm text-gray-900">{contact.jobTitle}</p>
+                                <p className="text-sm text-gray-900">{contact.job_title_c}</p>
                               </div>
                             </div>
                           )}
-                          {(contact.city || contact.state) && (
+                          {(contact.city_c || contact.state_c) && (
                             <div className="flex items-start space-x-3">
                               <ApperIcon name="MapPin" size={18} className="text-gray-400 mt-0.5" />
                               <div>
                                 <p className="text-xs text-gray-500">Location</p>
                                 <p className="text-sm text-gray-900">
-                                  {[contact.city, contact.state].filter(Boolean).join(', ')}
+                                  {[contact.city_c, contact.state_c].filter(Boolean).join(', ')}
                                 </p>
                               </div>
                             </div>
                           )}
-                          {contact.pinCode && (
+                          {contact.pin_code_c && (
                             <div className="flex items-start space-x-3">
                               <ApperIcon name="Hash" size={18} className="text-gray-400 mt-0.5" />
                               <div>
                                 <p className="text-xs text-gray-500">Pin Code</p>
-                                <p className="text-sm text-gray-900">{contact.pinCode}</p>
+                                <p className="text-sm text-gray-900">{contact.pin_code_c}</p>
                               </div>
                             </div>
                           )}
-                          {contact.linkedinUrl && (
+                          {contact.linkedin_url_c && (
                             <div className="flex items-start space-x-3">
                               <ApperIcon name="Linkedin" size={18} className="text-gray-400 mt-0.5" />
                               <div>
                                 <p className="text-xs text-gray-500">LinkedIn</p>
                                 <a 
-                                  href={contact.linkedinUrl}
+                                  href={contact.linkedin_url_c}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm text-primary hover:underline"
@@ -219,21 +219,21 @@ const ContactModal = ({ contact, onClose }) => {
                         Tags
                       </label>
                       <div className="flex flex-wrap gap-2">
-                        {contact.tags.map((tag) => (
+{contact.tags_c && contact.tags_c.split(',').map((tag) => (
                           <Badge key={tag} variant="primary">
-                            {tag}
+                            {tag.trim()}
                           </Badge>
                         ))}
                       </div>
                     </div>
 
-                    {contact.notes && (
+{contact.notes_c && (
                       <div>
                         <label className="text-sm font-medium text-gray-600 block mb-1">
                           Notes
                         </label>
                         <p className="text-gray-900 bg-gray-50 p-4 rounded-lg">
-                          {contact.notes}
+                          {contact.notes_c}
                         </p>
                       </div>
                     )}
@@ -245,19 +245,19 @@ const ContactModal = ({ contact, onClose }) => {
                     {deals.length > 0 ? (
                       deals.map((deal) => (
                         <div
-                          key={deal.Id}
+key={deal.Id}
                           className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors"
                         >
                           <div className="flex items-start justify-between mb-2">
-                            <h4 className="font-semibold text-gray-900">{deal.title}</h4>
-                            <Badge variant="primary">{deal.stage}</Badge>
+                            <h4 className="font-semibold text-gray-900">{deal.title_c}</h4>
+                            <Badge variant="primary">{deal.stage_c}</Badge>
                           </div>
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-xl font-bold text-primary">
-                              {formatCurrency(deal.value)}
+                              {formatCurrency(deal.value_c)}
                             </span>
                             <span className="text-gray-600">
-                              {deal.probability}% probability
+                              {deal.probability_c}% probability
                             </span>
                           </div>
                         </div>
@@ -274,23 +274,23 @@ const ContactModal = ({ contact, onClose }) => {
                   <div className="space-y-3">
                     {activities.length > 0 ? (
                       activities.map((activity) => (
-                        <div
+<div
                           key={activity.Id}
                           className="flex gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                         >
                           <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
                             <ApperIcon
-                              name={getActivityIcon(activity.type)}
+                              name={getActivityIcon(activity.type_c)}
                               size={20}
                               className="text-primary"
                             />
                           </div>
                           <div className="flex-1">
                             <p className="text-sm font-medium text-gray-900 mb-1">
-                              {activity.description}
+                              {activity.description_c}
                             </p>
                             <p className="text-xs text-gray-500">
-                              {format(new Date(activity.timestamp), "MMM d, yyyy 'at' h:mm a")}
+                              {format(new Date(activity.timestamp_c), "MMM d, yyyy 'at' h:mm a")}
                             </p>
                           </div>
                         </div>

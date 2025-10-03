@@ -8,39 +8,39 @@ import contactService from "@/services/api/contactService";
 
 const ContactFormModal = ({ contact, onClose, onSave }) => {
 const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    company: "",
-    jobTitle: "",
-    city: "",
-    state: "",
-    pinCode: "",
-    linkedinUrl: "",
-    status: "lead",
-    tags: "",
-    notes: ""
+    first_name_c: "",
+    last_name_c: "",
+    email_c: "",
+    phone_c: "",
+    company_c: "",
+    job_title_c: "",
+    city_c: "",
+    state_c: "",
+    pin_code_c: "",
+    linkedin_url_c: "",
+    status_c: "lead",
+    tags_c: "",
+    notes_c: ""
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-if (contact) {
+useEffect(() => {
+    if (contact) {
       setFormData({
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-        email: contact.email,
-        phone: contact.phone,
-        company: contact.company,
-        jobTitle: contact.jobTitle || "",
-        city: contact.city || "",
-        state: contact.state || "",
-        pinCode: contact.pinCode || "",
-        linkedinUrl: contact.linkedinUrl || "",
-        status: contact.status,
-        tags: contact.tags.join(", "),
-        notes: contact.notes || ""
+        first_name_c: contact.first_name_c || "",
+        last_name_c: contact.last_name_c || "",
+        email_c: contact.email_c || "",
+        phone_c: contact.phone_c || "",
+        company_c: contact.company_c || "",
+        job_title_c: contact.job_title_c || "",
+        city_c: contact.city_c || "",
+        state_c: contact.state_c || "",
+        pin_code_c: contact.pin_code_c || "",
+        linkedin_url_c: contact.linkedin_url_c || "",
+        status_c: contact.status_c || "lead",
+        tags_c: contact.tags_c || "",
+        notes_c: contact.notes_c || ""
       });
     }
   }, [contact]);
@@ -55,14 +55,14 @@ const handleChange = (e) => {
 
 const validate = () => {
     const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+    if (!formData.first_name_c.trim()) newErrors.first_name_c = "First name is required";
+    if (!formData.last_name_c.trim()) newErrors.last_name_c = "Last name is required";
+    if (!formData.email_c.trim()) {
+      newErrors.email_c = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email_c)) {
+      newErrors.email_c = "Email is invalid";
     }
-    if (!formData.company.trim()) newErrors.company = "Company is required";
+    if (!formData.company_c.trim()) newErrors.company_c = "Company is required";
     return newErrors;
   };
 
@@ -77,15 +77,14 @@ const validate = () => {
     setLoading(true);
     try {
 const contactData = {
-        ...formData,
-        tags: formData.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
+        ...formData
       };
 
       if (contact) {
         await contactService.update(contact.Id, contactData);
         toast.success("Contact updated successfully");
       } else {
-const result = await contactService.create(contactData);
+        const result = await contactService.create(contactData);
         if (result.clicksendSynced) {
           toast.success("Contact created and synced to ClickSend");
         } else {
@@ -148,16 +147,19 @@ const result = await contactService.create(contactData);
                 <FormField
                   label="First Name"
                   name="firstName"
-                  value={formData.firstName}
+value={formData.first_name_c}
                   onChange={handleChange}
+                  error={errors.first_name_c}
                   error={errors.firstName}
                   placeholder="John"
                   required
                 />
                 <FormField
                   label="Last Name"
-                  name="lastName"
-                  value={formData.lastName}
+name="last_name_c"
+                  value={formData.last_name_c}
+                  onChange={handleChange}
+                  error={errors.last_name_c}
                   onChange={handleChange}
                   error={errors.lastName}
                   placeholder="Doe"
@@ -171,8 +173,10 @@ const result = await contactService.create(contactData);
                   name="email"
                   type="email"
                   value={formData.email}
+name="email_c"
+                  value={formData.email_c}
                   onChange={handleChange}
-                  error={errors.email}
+                  error={errors.email_c}
                   placeholder="john@example.com"
                   required
                 />
@@ -181,7 +185,8 @@ const result = await contactService.create(contactData);
                   label="Phone"
                   name="phone"
                   type="tel"
-                  value={formData.phone}
+name="phone_c"
+                  value={formData.phone_c}
                   onChange={handleChange}
                   placeholder="+1 (555) 123-4567"
                 />
@@ -191,7 +196,8 @@ const result = await contactService.create(contactData);
               id="jobTitle"
               name="jobTitle"
               type="text"
-              value={formData.jobTitle}
+name="job_title_c"
+              value={formData.job_title_c}
               onChange={handleChange}
               placeholder="e.g., Chief Technology Officer"
             />
@@ -202,7 +208,8 @@ const result = await contactService.create(contactData);
                 id="city"
                 name="city"
                 type="text"
-                value={formData.city}
+name="city_c"
+                value={formData.city_c}
                 onChange={handleChange}
                 placeholder="e.g., San Francisco"
               />
@@ -211,7 +218,8 @@ const result = await contactService.create(contactData);
                 id="state"
                 name="state"
                 type="text"
-                value={formData.state}
+name="state_c"
+                value={formData.state_c}
                 onChange={handleChange}
                 placeholder="e.g., California"
               />
@@ -222,7 +230,8 @@ const result = await contactService.create(contactData);
               id="pinCode"
               name="pinCode"
               type="text"
-              value={formData.pinCode}
+name="pin_code_c"
+              value={formData.pin_code_c}
               onChange={handleChange}
               placeholder="e.g., 94102"
               pattern="[0-9]{5}"
@@ -233,7 +242,8 @@ const result = await contactService.create(contactData);
               id="linkedinUrl"
               name="linkedinUrl"
               type="url"
-              value={formData.linkedinUrl}
+name="linkedin_url_c"
+              value={formData.linkedin_url_c}
               onChange={handleChange}
               placeholder="e.g., https://linkedin.com/in/username"
             />
@@ -242,8 +252,10 @@ const result = await contactService.create(contactData);
                   label="Company"
                   name="company"
                   value={formData.company}
+name="company_c"
+                  value={formData.company_c}
                   onChange={handleChange}
-                  error={errors.company}
+                  error={errors.company_c}
                   placeholder="Company Name"
                   required
                 />
@@ -251,8 +263,10 @@ const result = await contactService.create(contactData);
                 <FormField
                   label="Status"
                   name="status"
+name="status_c"
                   type="select"
-                  value={formData.status}
+                  value={formData.status_c}
+                  onChange={handleChange}
                   onChange={handleChange}
                   required
                   options={statusOptions}
@@ -262,7 +276,8 @@ const result = await contactService.create(contactData);
               <FormField
                 label="Tags"
                 name="tags"
-                value={formData.tags}
+name="tags_c"
+                value={formData.tags_c}
                 onChange={handleChange}
                 placeholder="enterprise, tech, saas (comma-separated)"
               />
@@ -271,7 +286,8 @@ const result = await contactService.create(contactData);
                 label="Notes"
                 name="notes"
                 type="textarea"
-                value={formData.notes}
+name="notes_c"
+                value={formData.notes_c}
                 onChange={handleChange}
                 placeholder="Add any relevant notes about this contact..."
               />

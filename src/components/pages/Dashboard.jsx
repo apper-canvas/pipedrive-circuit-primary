@@ -40,11 +40,11 @@ const Dashboard = () => {
   };
 
   const calculateMetrics = () => {
-    const activeDeals = deals.filter(
-      (d) => !d.stage.includes("closed")
+const activeDeals = deals.filter(
+      (d) => !d.stage_c?.includes("closed")
     );
-    const wonDeals = deals.filter((d) => d.stage === "closed-won");
-    const totalValue = activeDeals.reduce((sum, d) => sum + d.value, 0);
+    const wonDeals = deals.filter((d) => d.stage_c === "closed-won");
+const totalValue = activeDeals.reduce((sum, d) => sum + (d.value_c || 0), 0);
     const conversionRate = deals.length > 0
       ? ((wonDeals.length / deals.length) * 100).toFixed(1)
       : 0;
@@ -53,7 +53,7 @@ const Dashboard = () => {
       totalDeals: activeDeals.length,
       conversionRate: `${conversionRate}%`,
       pipelineValue: totalValue,
-      activeContacts: contacts.filter((c) => c.status === "active").length
+activeContacts: contacts.filter((c) => c.status_c === "active").length
     };
   };
 
@@ -135,8 +135,8 @@ const Dashboard = () => {
           </div>
 
           <div className="space-y-4">
-            {activities.map((activity) => {
-              const contact = contacts.find((c) => c.Id === activity.contactId);
+{activities.map((activity) => {
+const contact = contacts.find((c) => c.Id === activity.contact_id_c?.Id || activity.contact_id_c);
               return (
                 <div
                   key={activity.Id}
@@ -144,7 +144,7 @@ const Dashboard = () => {
                 >
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
                     <ApperIcon
-                      name={getActivityIcon(activity.type)}
+name={getActivityIcon(activity.type_c)}
                       size={18}
                       className="text-primary"
                     />
@@ -154,7 +154,7 @@ const Dashboard = () => {
                       {activity.description}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {contact?.name} • {format(new Date(activity.timestamp), "MMM d, h:mm a")}
+{contact?.Name} • {format(new Date(activity.timestamp_c), "MMM d, h:mm a")}
                     </p>
                   </div>
                 </div>
@@ -182,7 +182,7 @@ const Dashboard = () => {
               { stage: "negotiation", label: "Negotiation", color: "bg-primary" },
               { stage: "closed-won", label: "Closed Won", color: "bg-success" }
             ].map(({ stage, label, color }) => {
-              const count = deals.filter((d) => d.stage === stage).length;
+const count = deals.filter((d) => d.stage_c === stage).length;
               const percentage = deals.length > 0 ? (count / deals.length) * 100 : 0;
               return (
                 <div key={stage}>

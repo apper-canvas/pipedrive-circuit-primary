@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useContext } from 'react';
 import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import { AuthContext } from '../../App';
 
 const Sidebar = () => {
+  const { logout } = useContext(AuthContext);
   const navItems = [
     { name: "Dashboard", path: "/", icon: "LayoutDashboard" },
     { name: "Pipeline", path: "/pipeline", icon: "TrendingUp" },
@@ -52,7 +56,7 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-gray-700">
+      <div className="p-4 space-y-3 border-t border-gray-700">
         <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <ApperIcon name="Sparkles" size={20} className="text-primary" />
@@ -64,6 +68,14 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
+        <Button 
+          variant="ghost" 
+          className="w-full justify-start text-gray-300 hover:text-white hover:bg-gray-700"
+          onClick={logout}
+        >
+          <ApperIcon name="LogOut" size={20} />
+          <span className="font-medium">Logout</span>
+        </Button>
       </div>
     </aside>
   );

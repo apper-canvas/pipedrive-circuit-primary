@@ -31,7 +31,7 @@ const DealCard = ({ deal, contact, onEdit, onDelete, isDragging }) => {
       <Card className="p-4 cursor-move border-l-4 border-primary hover:shadow-lg">
         <div className="flex items-start justify-between mb-3">
           <h4 className="font-semibold text-gray-900 text-sm leading-tight">
-            {deal.title}
+{deal.title_c}
           </h4>
           <div className="flex gap-1">
             <button
@@ -65,15 +65,15 @@ const DealCard = ({ deal, contact, onEdit, onDelete, isDragging }) => {
             <span className="text-lg font-bold text-primary">
               {formatCurrency(deal.value)}
             </span>
-            <Badge variant={getProbabilityColor(deal.probability)}>
-              {deal.probability}%
+<Badge variant={getProbabilityColor(deal.probability_c)}>
+              {deal.probability_c}%
             </Badge>
           </div>
 
-          {deal.expectedClose && (
+{deal.expected_close_c && (
             <div className="flex items-center gap-2 text-xs text-gray-500">
               <ApperIcon name="Calendar" size={12} />
-              <span>Close: {format(new Date(deal.expectedClose), "MMM d, yyyy")}</span>
+              <span>Close: {format(new Date(deal.expected_close_c), "MMM d, yyyy")}</span>
             </div>
           )}
         </div>

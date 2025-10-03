@@ -8,14 +8,14 @@ import dealService from "@/services/api/dealService";
 import contactService from "@/services/api/contactService";
 
 const DealModal = ({ deal, onClose, onSave }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    contactId: "",
-    value: "",
-    stage: "lead",
-    probability: 20,
-    expectedClose: "",
-    notes: ""
+const [formData, setFormData] = useState({
+    title_c: "",
+    contact_id_c: "",
+    value_c: "",
+    stage_c: "lead",
+    probability_c: 20,
+    expected_close_c: "",
+    notes_c: ""
   });
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -24,14 +24,14 @@ const DealModal = ({ deal, onClose, onSave }) => {
   useEffect(() => {
     loadContacts();
     if (deal) {
-      setFormData({
-        title: deal.title,
-        contactId: deal.contactId,
-        value: deal.value,
-        stage: deal.stage,
-        probability: deal.probability,
-        expectedClose: deal.expectedClose,
-        notes: deal.notes || ""
+setFormData({
+        title_c: deal.title_c || "",
+        contact_id_c: deal.contact_id_c?.Id || deal.contact_id_c || "",
+        value_c: deal.value_c || "",
+        stage_c: deal.stage_c || "lead",
+        probability_c: deal.probability_c || 20,
+        expected_close_c: deal.expected_close_c || "",
+        notes_c: deal.notes_c || ""
       });
     }
   }, [deal]);
@@ -72,11 +72,11 @@ const DealModal = ({ deal, onClose, onSave }) => {
 
     setLoading(true);
     try {
-      const dealData = {
+const dealData = {
         ...formData,
-        contactId: parseInt(formData.contactId),
-        value: parseFloat(formData.value),
-        probability: parseInt(formData.probability)
+        contact_id_c: parseInt(formData.contact_id_c),
+        value_c: parseFloat(formData.value_c),
+        probability_c: parseInt(formData.probability_c)
       };
 
       if (deal) {
@@ -162,8 +162,8 @@ const DealModal = ({ deal, onClose, onSave }) => {
                 options={[
                   { value: "", label: "Select a contact" },
                   ...contacts.map((c) => ({
-                    value: c.Id,
-                    label: `${c.name} - ${c.company}`
+value: c.Id,
+                    label: `${c.Name} - ${c.company_c}`
                   }))
                 ]}
               />
