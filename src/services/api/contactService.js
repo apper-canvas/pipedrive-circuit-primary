@@ -152,7 +152,7 @@ const contactService = {
           }
         );
 
-        const responseData = await result.json();
+const responseData = result;
 
         if (responseData.success === false) {
           console.info(`apper_info: Got an error in this function: ${import.meta.env.VITE_CREATE_CLICKSEND_CONTACT}. The response body is: ${JSON.stringify(responseData)}.`);
