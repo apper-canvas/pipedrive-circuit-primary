@@ -156,7 +156,63 @@ const ContactModal = ({ contact, onClose }) => {
                           {format(new Date(contact.lastContact), "MMM d, yyyy")}
                         </span>
                       </div>
-                    </div>
+</div>
+
+                    {/* Professional Information */}
+                    {(contact.jobTitle || contact.city || contact.state || contact.pinCode || contact.linkedinUrl) && (
+                      <div className="space-y-4">
+                        <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+                          Professional Information
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {contact.jobTitle && (
+                            <div className="flex items-start space-x-3">
+                              <ApperIcon name="Building2" size={18} className="text-gray-400 mt-0.5" />
+                              <div>
+                                <p className="text-xs text-gray-500">Job Title</p>
+                                <p className="text-sm text-gray-900">{contact.jobTitle}</p>
+                              </div>
+                            </div>
+                          )}
+                          {(contact.city || contact.state) && (
+                            <div className="flex items-start space-x-3">
+                              <ApperIcon name="MapPin" size={18} className="text-gray-400 mt-0.5" />
+                              <div>
+                                <p className="text-xs text-gray-500">Location</p>
+                                <p className="text-sm text-gray-900">
+                                  {[contact.city, contact.state].filter(Boolean).join(', ')}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                          {contact.pinCode && (
+                            <div className="flex items-start space-x-3">
+                              <ApperIcon name="Hash" size={18} className="text-gray-400 mt-0.5" />
+                              <div>
+                                <p className="text-xs text-gray-500">Pin Code</p>
+                                <p className="text-sm text-gray-900">{contact.pinCode}</p>
+                              </div>
+                            </div>
+                          )}
+                          {contact.linkedinUrl && (
+                            <div className="flex items-start space-x-3">
+                              <ApperIcon name="Linkedin" size={18} className="text-gray-400 mt-0.5" />
+                              <div>
+                                <p className="text-xs text-gray-500">LinkedIn</p>
+                                <a 
+                                  href={contact.linkedinUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-primary hover:underline"
+                                >
+                                  View Profile
+                                </a>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
 
                     <div>
                       <label className="text-sm font-medium text-gray-600 block mb-1">

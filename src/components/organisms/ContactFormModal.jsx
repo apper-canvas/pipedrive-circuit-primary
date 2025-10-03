@@ -7,11 +7,16 @@ import FormField from "@/components/molecules/FormField";
 import contactService from "@/services/api/contactService";
 
 const ContactFormModal = ({ contact, onClose, onSave }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     company: "",
+    jobTitle: "",
+    city: "",
+    state: "",
+    pinCode: "",
+    linkedinUrl: "",
     status: "lead",
     tags: "",
     notes: ""
@@ -22,10 +27,15 @@ const ContactFormModal = ({ contact, onClose, onSave }) => {
   useEffect(() => {
     if (contact) {
       setFormData({
-        name: contact.name,
+name: contact.name,
         email: contact.email,
         phone: contact.phone,
         company: contact.company,
+        jobTitle: contact.jobTitle || "",
+        city: contact.city || "",
+        state: contact.state || "",
+        pinCode: contact.pinCode || "",
+        linkedinUrl: contact.linkedinUrl || "",
         status: contact.status,
         tags: contact.tags.join(", "),
         notes: contact.notes || ""
@@ -158,7 +168,57 @@ const ContactFormModal = ({ contact, onClose, onSave }) => {
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
+<FormField
+              label="Job Title"
+              id="jobTitle"
+              name="jobTitle"
+              type="text"
+              value={formData.jobTitle}
+              onChange={handleChange}
+              placeholder="e.g., Chief Technology Officer"
+            />
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                label="City"
+                id="city"
+                name="city"
+                type="text"
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="e.g., San Francisco"
+              />
+              <FormField
+                label="State"
+                id="state"
+                name="state"
+                type="text"
+                value={formData.state}
+                onChange={handleChange}
+                placeholder="e.g., California"
+              />
+            </div>
+
+            <FormField
+              label="Pin Code"
+              id="pinCode"
+              name="pinCode"
+              type="text"
+              value={formData.pinCode}
+              onChange={handleChange}
+              placeholder="e.g., 94102"
+              pattern="[0-9]{5}"
+            />
+
+            <FormField
+              label="LinkedIn Profile URL"
+              id="linkedinUrl"
+              name="linkedinUrl"
+              type="url"
+              value={formData.linkedinUrl}
+              onChange={handleChange}
+              placeholder="e.g., https://linkedin.com/in/username"
+            />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   label="Company"
