@@ -52,7 +52,8 @@ const Contacts = () => {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (contact) =>
-          contact.name.toLowerCase().includes(query) ||
+contact.firstName.toLowerCase().includes(query) ||
+          contact.lastName.toLowerCase().includes(query) ||
           contact.email.toLowerCase().includes(query) ||
           contact.company.toLowerCase().includes(query)
       );

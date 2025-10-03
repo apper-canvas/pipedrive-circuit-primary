@@ -56,11 +56,12 @@ const contactService = {
     return { success: true };
   },
 
-  search: async (query) => {
+search: async (query) => {
     await delay(250);
     const lowerQuery = query.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(lowerQuery) ||
+      contact.firstName.toLowerCase().includes(lowerQuery) ||
+      contact.lastName.toLowerCase().includes(lowerQuery) ||
       contact.email.toLowerCase().includes(lowerQuery) ||
       contact.company.toLowerCase().includes(lowerQuery)
     );

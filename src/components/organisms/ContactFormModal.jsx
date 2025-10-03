@@ -8,7 +8,8 @@ import contactService from "@/services/api/contactService";
 
 const ContactFormModal = ({ contact, onClose, onSave }) => {
 const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     company: "",
@@ -25,9 +26,10 @@ const [formData, setFormData] = useState({
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (contact) {
+if (contact) {
       setFormData({
-name: contact.name,
+        firstName: contact.firstName || "",
+        lastName: contact.lastName || "",
         email: contact.email,
         phone: contact.phone,
         company: contact.company,
@@ -43,7 +45,7 @@ name: contact.name,
     }
   }, [contact]);
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
@@ -51,9 +53,10 @@ name: contact.name,
     }
   };
 
-  const validate = () => {
+const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -73,7 +76,7 @@ name: contact.name,
 
     setLoading(true);
     try {
-      const contactData = {
+const contactData = {
         ...formData,
         tags: formData.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
       };
@@ -137,15 +140,26 @@ name: contact.name,
 
           <form onSubmit={handleSubmit} className="p-6 overflow-y-auto max-h-[calc(90vh-180px)]">
             <div className="space-y-4">
-              <FormField
-                label="Full Name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                error={errors.name}
-                placeholder="John Doe"
-                required
-              />
+<div className="grid grid-cols-2 gap-4">
+                <FormField
+                  label="First Name"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  error={errors.firstName}
+                  placeholder="John"
+                  required
+                />
+                <FormField
+                  label="Last Name"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  error={errors.lastName}
+                  placeholder="Doe"
+                  required
+                />
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField

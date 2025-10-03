@@ -28,13 +28,13 @@ const ContactRow = ({ contact, onClick, onEdit, onDelete }) => {
       <div className="flex items-center gap-4">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center flex-shrink-0">
           <span className="text-white font-semibold text-lg">
-            {contact.name.charAt(0).toUpperCase()}
+{contact.firstName.charAt(0).toUpperCase()}
           </span>
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold text-gray-900 truncate">{contact.name}</h3>
+<h3 className="font-semibold text-gray-900 truncate">{contact.firstName} {contact.lastName}</h3>
             <Badge variant={getStatusVariant(contact.status)}>
               {contact.status}
             </Badge>
