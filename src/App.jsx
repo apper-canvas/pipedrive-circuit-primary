@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
