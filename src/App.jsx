@@ -8,6 +8,7 @@ import Layout from "@/components/organisms/Layout";
 import Dashboard from "@/components/pages/Dashboard";
 import Pipeline from "@/components/pages/Pipeline";
 import Contacts from "@/components/pages/Contacts";
+import Companies from "@/components/pages/Companies";
 import Settings from "@/components/pages/Settings";
 import Login from "@/components/pages/Login";
 import Signup from "@/components/pages/Signup";
@@ -15,7 +16,6 @@ import Callback from "@/components/pages/Callback";
 import ErrorPage from "@/components/pages/ErrorPage";
 import ResetPassword from "@/components/pages/ResetPassword";
 import PromptPassword from "@/components/pages/PromptPassword";
-
 export const AuthContext = createContext(null);
 
 function App() {
@@ -114,10 +114,11 @@ function App() {
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
         <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
-        <Route path="/" element={<Layout />}>
+<Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="pipeline" element={<Pipeline />} />
           <Route path="contacts" element={<Contacts />} />
+          <Route path="companies" element={<Companies />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
