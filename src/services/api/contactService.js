@@ -1,5 +1,12 @@
 import contactsData from "@/services/mockData/contacts.json";
 
+const { ApperClient } = window.ApperSDK;
+
+const apperClient = new ApperClient({
+  apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+  apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+});
+
 let contacts = [...contactsData];
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -19,7 +26,7 @@ const contactService = {
     return { ...contact };
   },
 
-  create: async (contactData) => {
+create: async (contactData) => {
     await delay(400);
     const maxId = contacts.length > 0 ? Math.max(...contacts.map(c => c.Id)) : 0;
     const newContact = {
@@ -29,7 +36,37 @@ const contactService = {
       lastContact: Date.now()
     };
     contacts.push(newContact);
-    return { ...newContact };
+
+    // Sync to ClickSend SMS
+    try {
+      const result = await apperClient.functions.invoke(
+        import.meta.env.VITE_CREATE_CLICKSEND_CONTACT,
+        {
+          body: JSON.stringify({
+            phoneNumber: newContact.phone,
+            email: newContact.email,
+            firstName: newContact.firstName,
+            lastName: newContact.lastName
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      const responseData = await result.json();
+
+      if (responseData.success === false) {
+        console.info(`apper_info: Got an error in this function: ${import.meta.env.VITE_CREATE_CLICKSEND_CONTACT}. The response body is: ${JSON.stringify(responseData)}.`);
+        return { ...newContact, clicksendSynced: false };
+      }
+
+      console.info(`apper_info: Successfully synced contact to ClickSend. Contact ID: ${responseData.clicksendContactId}`);
+      return { ...newContact, clicksendSynced: true, clicksendContactId: responseData.clicksendContactId };
+    } catch (error) {
+      console.info(`apper_info: Got this error in this function: ${import.meta.env.VITE_CREATE_CLICKSEND_CONTACT}. The error is: ${error.message}`);
+      return { ...newContact, clicksendSynced: false };
+    }
   },
 
   update: async (id, contactData) => {

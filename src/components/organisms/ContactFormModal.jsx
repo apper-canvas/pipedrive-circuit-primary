@@ -85,8 +85,12 @@ const contactData = {
         await contactService.update(contact.Id, contactData);
         toast.success("Contact updated successfully");
       } else {
-        await contactService.create(contactData);
-        toast.success("Contact created successfully");
+const result = await contactService.create(contactData);
+        if (result.clicksendSynced) {
+          toast.success("Contact created and synced to ClickSend");
+        } else {
+          toast.success("Contact created but ClickSend sync failed");
+        }
       }
       onSave();
       onClose();
