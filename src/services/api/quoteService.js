@@ -14,19 +14,18 @@ const quoteService = {
       const params = {
         fields: [
           { field: { Name: "Id" } },
-          { field: { Name: "Name" } },
-          { field: { Name: "QuoteNumber" } },
-          { field: { Name: "Amount" } },
-          { field: { Name: "Status" } },
-          { field: { Name: "ValidUntil" } },
-          { field: { Name: "Terms" } },
-          { field: { Name: "Notes" } },
-          { field: { Name: "CreatedDate" } },
-          { field: { Name: "ModifiedDate" } },
+{ field: { Name: "Name" } },
+          { field: { Name: "title_c" } },
+          { field: { Name: "quote_amount_c" } },
+          { field: { Name: "status_c" } },
+          { field: { Name: "issue_date_c" } },
+          { field: { Name: "expiry_date_c" } },
+          { field: { Name: "notes_c" } },
+          { field: { Name: "CreatedOn" } },
+          { field: { Name: "ModifiedOn" } },
           // Lookup fields return as objects with Id and Name
-          { field: { name: "DealId_c" }, referenceField: { field: { Name: "Name" } } },
-          { field: { name: "CompanyId_c" }, referenceField: { field: { Name: "Name" } } },
-          { field: { name: "ContactId_c" }, referenceField: { field: { Name: "FirstName" } } }
+          { field: { name: "deal_id_c" }, referenceField: { field: { Name: "Name" } } },
+          { field: { name: "contact_id_c" }, referenceField: { field: { Name: "Name" } } }
         ],
         where: [],
         orderBy: [{ fieldName: "CreatedDate", sorttype: "DESC" }],
@@ -45,7 +44,7 @@ const quoteService = {
             },
             {
               conditions: [
-                { fieldName: "QuoteNumber", operator: "Contains", values: [filters.search] }
+{ fieldName: "title_c", operator: "Contains", values: [filters.search] }
               ]
             }
           ]
@@ -85,19 +84,18 @@ const quoteService = {
 
       const params = {
         fields: [
-          { field: { Name: "Id" } },
+{ field: { Name: "Id" } },
           { field: { Name: "Name" } },
-          { field: { Name: "QuoteNumber" } },
-          { field: { Name: "Amount" } },
-          { field: { Name: "Status" } },
-          { field: { Name: "ValidUntil" } },
-          { field: { Name: "Terms" } },
-          { field: { Name: "Notes" } },
-          { field: { Name: "CreatedDate" } },
-          { field: { Name: "ModifiedDate" } },
-          { field: { name: "DealId_c" }, referenceField: { field: { Name: "Name" } } },
-          { field: { name: "CompanyId_c" }, referenceField: { field: { Name: "Name" } } },
-          { field: { name: "ContactId_c" }, referenceField: { field: { Name: "FirstName" } } }
+          { field: { Name: "title_c" } },
+          { field: { Name: "quote_amount_c" } },
+          { field: { Name: "status_c" } },
+          { field: { Name: "issue_date_c" } },
+          { field: { Name: "expiry_date_c" } },
+          { field: { Name: "notes_c" } },
+          { field: { Name: "CreatedOn" } },
+          { field: { Name: "ModifiedOn" } },
+          { field: { name: "deal_id_c" }, referenceField: { field: { Name: "Name" } } },
+          { field: { name: "contact_id_c" }, referenceField: { field: { Name: "Name" } } }
         ]
       };
 
@@ -125,37 +123,33 @@ const quoteService = {
       });
 
       // Prepare record with only Updateable fields and proper formatting
-      const record = {};
+const record = {};
       
       // Text fields
       if (quoteData.Name) record.Name = quoteData.Name;
-      if (quoteData.QuoteNumber) record.QuoteNumber = quoteData.QuoteNumber;
-      
+      if (quoteData.title_c) record.title_c = quoteData.title_c;
       // Lookup fields - send only ID as integer
-      if (quoteData.DealId_c) {
-        record.DealId_c = parseInt(quoteData.DealId_c?.Id || quoteData.DealId_c);
+if (quoteData.deal_id_c) {
+        record.deal_id_c = parseInt(quoteData.deal_id_c?.Id || quoteData.deal_id_c);
       }
-      if (quoteData.CompanyId_c) {
-        record.CompanyId_c = parseInt(quoteData.CompanyId_c?.Id || quoteData.CompanyId_c);
-      }
-      if (quoteData.ContactId_c) {
-        record.ContactId_c = parseInt(quoteData.ContactId_c?.Id || quoteData.ContactId_c);
+      if (quoteData.contact_id_c) {
+        record.contact_id_c = parseInt(quoteData.contact_id_c?.Id || quoteData.contact_id_c);
       }
       
       // Currency field
-      if (quoteData.Amount !== undefined && quoteData.Amount !== null && quoteData.Amount !== '') {
-        record.Amount = parseFloat(quoteData.Amount);
+if (quoteData.quote_amount_c !== undefined && quoteData.quote_amount_c !== null && quoteData.quote_amount_c !== '') {
+        record.quote_amount_c = parseFloat(quoteData.quote_amount_c);
       }
       
       // Picklist field
-      if (quoteData.Status) record.Status = quoteData.Status;
+if (quoteData.status_c) record.status_c = quoteData.status_c;
       
       // Date field - ISO format YYYY-MM-DD
-      if (quoteData.ValidUntil) record.ValidUntil = quoteData.ValidUntil;
+if (quoteData.issue_date_c) record.issue_date_c = quoteData.issue_date_c;
+      if (quoteData.expiry_date_c) record.expiry_date_c = quoteData.expiry_date_c;
       
       // MultilineText fields
-      if (quoteData.Terms) record.Terms = quoteData.Terms;
-      if (quoteData.Notes) record.Notes = quoteData.Notes;
+if (quoteData.notes_c) record.notes_c = quoteData.notes_c;
 
       const params = {
         records: [record]
@@ -201,34 +195,31 @@ const quoteService = {
       const record = { Id: parseInt(id) };
       
       // Text fields
-      if (quoteData.Name) record.Name = quoteData.Name;
-      if (quoteData.QuoteNumber) record.QuoteNumber = quoteData.QuoteNumber;
+if (quoteData.Name) record.Name = quoteData.Name;
+      if (quoteData.title_c) record.title_c = quoteData.title_c;
       
       // Lookup fields - send only ID as integer
-      if (quoteData.DealId_c !== undefined) {
-        record.DealId_c = quoteData.DealId_c ? parseInt(quoteData.DealId_c?.Id || quoteData.DealId_c) : null;
+if (quoteData.deal_id_c !== undefined) {
+        record.deal_id_c = quoteData.deal_id_c ? parseInt(quoteData.deal_id_c?.Id || quoteData.deal_id_c) : null;
       }
-      if (quoteData.CompanyId_c !== undefined) {
-        record.CompanyId_c = quoteData.CompanyId_c ? parseInt(quoteData.CompanyId_c?.Id || quoteData.CompanyId_c) : null;
-      }
-      if (quoteData.ContactId_c !== undefined) {
-        record.ContactId_c = quoteData.ContactId_c ? parseInt(quoteData.ContactId_c?.Id || quoteData.ContactId_c) : null;
+      if (quoteData.contact_id_c !== undefined) {
+        record.contact_id_c = quoteData.contact_id_c ? parseInt(quoteData.contact_id_c?.Id || quoteData.contact_id_c) : null;
       }
       
       // Currency field
-      if (quoteData.Amount !== undefined && quoteData.Amount !== null && quoteData.Amount !== '') {
-        record.Amount = parseFloat(quoteData.Amount);
+if (quoteData.quote_amount_c !== undefined && quoteData.quote_amount_c !== null && quoteData.quote_amount_c !== '') {
+        record.quote_amount_c = parseFloat(quoteData.quote_amount_c);
       }
       
       // Picklist field
-      if (quoteData.Status) record.Status = quoteData.Status;
+if (quoteData.status_c) record.status_c = quoteData.status_c;
       
       // Date field
-      if (quoteData.ValidUntil) record.ValidUntil = quoteData.ValidUntil;
+if (quoteData.issue_date_c) record.issue_date_c = quoteData.issue_date_c;
+      if (quoteData.expiry_date_c) record.expiry_date_c = quoteData.expiry_date_c;
       
       // MultilineText fields
-      if (quoteData.Terms !== undefined) record.Terms = quoteData.Terms;
-      if (quoteData.Notes !== undefined) record.Notes = quoteData.Notes;
+if (quoteData.notes_c !== undefined) record.notes_c = quoteData.notes_c;
 
       const params = {
         records: [record]

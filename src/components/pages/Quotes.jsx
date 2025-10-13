@@ -30,15 +30,14 @@ const Quotes = () => {
   const [editingQuote, setEditingQuote] = useState(null);
   const [formData, setFormData] = useState({
     Name: "",
-    QuoteNumber: "",
-    DealId_c: "",
-    CompanyId_c: "",
-    ContactId_c: "",
-    Amount: "",
-    Status: "Draft",
-    ValidUntil: "",
-    Terms: "",
-    Notes: ""
+title_c: "",
+    deal_id_c: "",
+    contact_id_c: "",
+    quote_amount_c: "",
+    status_c: "Draft",
+    issue_date_c: "",
+    expiry_date_c: "",
+    notes_c: ""
   });
 
   useEffect(() => {
@@ -79,30 +78,28 @@ const Quotes = () => {
     if (quote) {
       setEditingQuote(quote);
       setFormData({
-        Name: quote.Name || "",
-        QuoteNumber: quote.QuoteNumber || "",
-        DealId_c: quote.DealId_c?.Id || "",
-        CompanyId_c: quote.CompanyId_c?.Id || "",
-        ContactId_c: quote.ContactId_c?.Id || "",
-        Amount: quote.Amount || "",
-        Status: quote.Status || "Draft",
-        ValidUntil: quote.ValidUntil || "",
-        Terms: quote.Terms || "",
-        Notes: quote.Notes || ""
+Name: quote.Name || "",
+        title_c: quote.title_c || "",
+        deal_id_c: quote.deal_id_c?.Id || "",
+        contact_id_c: quote.contact_id_c?.Id || "",
+        quote_amount_c: quote.quote_amount_c || "",
+        status_c: quote.status_c || "Draft",
+        issue_date_c: quote.issue_date_c || "",
+        expiry_date_c: quote.expiry_date_c || "",
+        notes_c: quote.notes_c || ""
       });
     } else {
       setEditingQuote(null);
       setFormData({
         Name: "",
-        QuoteNumber: "",
-        DealId_c: "",
-        CompanyId_c: "",
-        ContactId_c: "",
-        Amount: "",
-        Status: "Draft",
-        ValidUntil: "",
-        Terms: "",
-        Notes: ""
+title_c: "",
+        deal_id_c: "",
+        contact_id_c: "",
+        quote_amount_c: "",
+        status_c: "Draft",
+        issue_date_c: "",
+        expiry_date_c: "",
+        notes_c: ""
       });
     }
     setShowModal(true);
@@ -112,16 +109,15 @@ const Quotes = () => {
     setShowModal(false);
     setEditingQuote(null);
     setFormData({
-      Name: "",
-      QuoteNumber: "",
-      DealId_c: "",
-      CompanyId_c: "",
-      ContactId_c: "",
-      Amount: "",
-      Status: "Draft",
-      ValidUntil: "",
-      Terms: "",
-      Notes: ""
+Name: "",
+      title_c: "",
+      deal_id_c: "",
+      contact_id_c: "",
+      quote_amount_c: "",
+      status_c: "Draft",
+      issue_date_c: "",
+      expiry_date_c: "",
+      notes_c: ""
     });
   };
 
@@ -136,7 +132,7 @@ const Quotes = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.Name || !formData.Amount || !formData.Status) {
+if (!formData.Name || !formData.quote_amount_c || !formData.status_c) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -203,21 +199,21 @@ const Quotes = () => {
   const filteredQuotes = quotes
     .filter(quote => {
       const matchesSearch = 
-        quote.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quote.QuoteNumber?.toLowerCase().includes(searchTerm.toLowerCase());
+quote.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        quote.title_c?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesStatus = statusFilter === "All" || quote.Status === statusFilter;
       return matchesSearch && matchesStatus;
     })
     .sort((a, b) => {
       let compareValue = 0;
-      if (sortBy === "Name") {
+if (sortBy === "Name") {
         compareValue = (a.Name || "").localeCompare(b.Name || "");
-      } else if (sortBy === "Amount") {
-        compareValue = (a.Amount || 0) - (b.Amount || 0);
-      } else if (sortBy === "ValidUntil") {
-        compareValue = new Date(a.ValidUntil || 0) - new Date(b.ValidUntil || 0);
+      } else if (sortBy === "quote_amount_c") {
+        compareValue = (a.quote_amount_c || 0) - (b.quote_amount_c || 0);
+      } else if (sortBy === "expiry_date_c") {
+        compareValue = new Date(a.expiry_date_c || 0) - new Date(b.expiry_date_c || 0);
       } else {
-        compareValue = new Date(a.CreatedDate || 0) - new Date(b.CreatedDate || 0);
+        compareValue = new Date(a.CreatedOn || 0) - new Date(b.CreatedOn || 0);
       }
       return sortOrder === "ASC" ? compareValue : -compareValue;
     });
@@ -270,9 +266,9 @@ const Quotes = () => {
                 onChange={(e) => setSortBy(e.target.value)}
               >
                 <option value="CreatedDate">Created Date</option>
-                <option value="Name">Name</option>
-                <option value="Amount">Amount</option>
-                <option value="ValidUntil">Valid Until</option>
+<option value="Name">Name</option>
+                <option value="quote_amount_c">Amount</option>
+                <option value="expiry_date_c">Expiry Date</option>
               </Select>
             </div>
             <div>
@@ -304,20 +300,20 @@ const Quotes = () => {
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
-                      Quote
+<th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
+                      Title
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
                       Number
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
-                      Company
+<th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
+                      Contact
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
                       Amount
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
-                      Status
+<th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
+                      Amount
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
                       Valid Until
@@ -337,30 +333,27 @@ const Quotes = () => {
                       className="hover:bg-gray-50 transition-colors"
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-secondary">{quote.Name}</div>
-                        {quote.DealId_c?.Name && (
-                          <div className="text-xs text-secondary-light">Deal: {quote.DealId_c.Name}</div>
+<div className="text-sm font-medium text-secondary">{quote.Name}</div>
+                        {quote.deal_id_c?.Name && (
+                          <div className="text-xs text-secondary-light">Deal: {quote.deal_id_c.Name}</div>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">
-                        {quote.QuoteNumber || '-'}
+<td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">
+                        {quote.title_c || '-'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-secondary">{quote.CompanyId_c?.Name || '-'}</div>
-                        {quote.ContactId_c?.FirstName && (
-                          <div className="text-xs text-secondary-light">{quote.ContactId_c.FirstName}</div>
-                        )}
+<div className="text-sm text-secondary">{quote.contact_id_c?.Name || '-'}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary">
-                        ${(quote.Amount || 0).toLocaleString()}
+<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary">
+                        ${(quote.quote_amount_c || 0).toLocaleString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <Badge className={getStatusColor(quote.Status)}>
-                          {quote.Status}
+<Badge className={getStatusColor(quote.status_c)}>
+                          {quote.status_c}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">
-                        {quote.ValidUntil ? new Date(quote.ValidUntil).toLocaleDateString() : '-'}
+<td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">
+                        {quote.expiry_date_c ? new Date(quote.expiry_date_c).toLocaleDateString() : '-'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <Button
@@ -431,16 +424,15 @@ const Quotes = () => {
                       required
                     />
                   </div>
-
-                  <div>
+<div>
                     <label className="block text-sm font-medium text-secondary mb-2">
-                      Quote Number
+                      Title
                     </label>
                     <Input
-                      name="QuoteNumber"
-                      value={formData.QuoteNumber}
+                      name="title_c"
+                      value={formData.title_c}
                       onChange={handleInputChange}
-                      placeholder="Q-2024-001"
+                      placeholder="Quote title"
                     />
                   </div>
 
@@ -449,8 +441,8 @@ const Quotes = () => {
                       Deal
                     </label>
                     <Select
-                      name="DealId_c"
-                      value={formData.DealId_c}
+name="deal_id_c"
+                      value={formData.deal_id_c}
                       onChange={handleInputChange}
                     >
                       <option value="">Select Deal</option>
@@ -465,7 +457,7 @@ const Quotes = () => {
                   <div>
                     <label className="block text-sm font-medium text-secondary mb-2">
                       Company
-                    </label>
+</label>
                     <Select
                       name="CompanyId_c"
                       value={formData.CompanyId_c}
@@ -481,7 +473,7 @@ const Quotes = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-secondary mb-2">
+<label className="block text-sm font-medium text-secondary mb-2">
                       Contact
                     </label>
                     <Select
@@ -504,8 +496,8 @@ const Quotes = () => {
                     </label>
                     <Input
                       type="number"
-                      name="Amount"
-                      value={formData.Amount}
+name="quote_amount_c"
+                      value={formData.quote_amount_c}
                       onChange={handleInputChange}
                       placeholder="0.00"
                       step="0.01"
@@ -519,8 +511,8 @@ const Quotes = () => {
                       Status <span className="text-error">*</span>
                     </label>
                     <Select
-                      name="Status"
-                      value={formData.Status}
+name="status_c"
+                      value={formData.status_c}
                       onChange={handleInputChange}
                       required
                     >
@@ -536,8 +528,8 @@ const Quotes = () => {
                       Valid Until
                     </label>
                     <Input
-                      type="date"
-                      name="ValidUntil"
+type="date"
+                      name="expiry_date_c"
                       value={formData.ValidUntil}
                       onChange={handleInputChange}
                     />
@@ -549,8 +541,8 @@ const Quotes = () => {
                     Terms & Conditions
                   </label>
                   <textarea
-                    name="Terms"
-                    value={formData.Terms}
+name="issue_date_c"
+                    value={formData.issue_date_c}
                     onChange={handleInputChange}
                     placeholder="Enter terms and conditions"
                     rows="3"
@@ -562,9 +554,9 @@ const Quotes = () => {
                   <label className="block text-sm font-medium text-secondary mb-2">
                     Notes
                   </label>
-                  <textarea
-                    name="Notes"
-                    value={formData.Notes}
+<textarea
+                    name="notes_c"
+                    value={formData.notes_c}
                     onChange={handleInputChange}
                     placeholder="Additional notes"
                     rows="3"
