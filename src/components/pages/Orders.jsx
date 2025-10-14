@@ -55,11 +55,12 @@ const Orders = () => {
   const filterOrders = () => {
     let filtered = [...orders];
 
-    if (searchTerm) {
+if (searchTerm) {
       filtered = filtered.filter(order => 
         order.order_number_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.contact_id_c?.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.deal_id_c?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
+        order.deal_id_c?.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.quote_id_c?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -154,7 +155,10 @@ const Orders = () => {
                     Order Number
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Deal
+Deal
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Quote
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Contact

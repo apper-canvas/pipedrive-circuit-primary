@@ -51,9 +51,16 @@ const OrderModal = ({ order, onClose }) => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Deal
+Deal
               </label>
               <p className="text-gray-900">{order.deal_id_c?.Name || "N/A"}</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Quote
+              </label>
+              <p className="text-gray-900">{order.quote_id_c?.Name || "N/A"}</p>
             </div>
 
             <div>

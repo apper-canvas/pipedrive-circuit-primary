@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import orderService from "@/services/api/orderService";
 import dealService from "@/services/api/dealService";
 import contactService from "@/services/api/contactService";
+import quoteService from "@/services/api/quoteService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
@@ -11,18 +12,20 @@ import Select from "@/components/atoms/Select";
 const OrderFormModal = ({ order, onClose, onSuccess }) => {
   const isEditMode = !!order;
   
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     order_number_c: "",
     deal_id_c: "",
     contact_id_c: "",
+    quote_id_c: "",
     order_date_c: "",
     status_c: "draft",
     total_amount_c: "",
     notes_c: ""
   });
   
-  const [deals, setDeals] = useState([]);
+const [deals, setDeals] = useState([]);
   const [contacts, setContacts] = useState([]);
+  const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -39,11 +42,12 @@ const OrderFormModal = ({ order, onClose, onSuccess }) => {
   }, []);
 
   useEffect(() => {
-    if (order) {
+if (order) {
       setFormData({
         order_number_c: order.order_number_c || "",
         deal_id_c: order.deal_id_c?.Id || order.deal_id_c || "",
         contact_id_c: order.contact_id_c?.Id || order.contact_id_c || "",
+        quote_id_c: order.quote_id_c?.Id || order.quote_id_c || "",
         order_date_c: order.order_date_c || "",
         status_c: order.status_c || "draft",
         total_amount_c: order.total_amount_c || "",
@@ -55,10 +59,14 @@ const OrderFormModal = ({ order, onClose, onSuccess }) => {
   const loadInitialData = async () => {
     setLoadingData(true);
     try {
-      const [dealsData, contactsData] = await Promise.all([
+const [dealsData, contactsData, quotesData] = await Promise.all([
         dealService.getAll(),
-        contactService.getAll()
+        contactService.getAll(),
+        quoteService.getAll()
       ]);
+      setDeals(dealsData);
+      setContacts(contactsData);
+      setQuotes(quotesData);
       setDeals(dealsData);
       setContacts(contactsData);
     } catch (err) {
@@ -76,7 +84,7 @@ const OrderFormModal = ({ order, onClose, onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.order_number_c || !formData.deal_id_c || !formData.contact_id_c || !formData.order_date_c) {
+if (!formData.order_number_c || !formData.deal_id_c || !formData.contact_id_c || !formData.order_date_c) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -106,11 +114,19 @@ const OrderFormModal = ({ order, onClose, onSuccess }) => {
     }))
   ];
 
-  const contactOptions = [
+const contactOptions = [
     { value: "", label: "Select Contact" },
     ...contacts.map(contact => ({
       value: contact.Id.toString(),
       label: contact.Name || `Contact #${contact.Id}`
+    }))
+  ];
+
+  const quoteOptions = [
+    { value: "", label: "Select Quote (Optional)" },
+    ...quotes.map(quote => ({
+      value: quote.Id.toString(),
+      label: quote.Name || quote.title_c || `Quote #${quote.Id}`
     }))
   ];
 
@@ -173,6 +189,18 @@ const OrderFormModal = ({ order, onClose, onSuccess }) => {
                 onChange={handleChange}
                 options={contactOptions}
                 required
+              />
+</div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Quote <span className="text-gray-400">(Optional)</span>
+              </label>
+              <Select
+                options={quoteOptions}
+                value={formData.quote_id_c}
+                onChange={(e) => handleChange(e)}
+                name="quote_id_c"
               />
             </div>
 
