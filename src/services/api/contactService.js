@@ -25,8 +25,9 @@ const contactService = {
           {"field": {"Name": "status_c"}},
           {"field": {"Name": "tags_c"}},
           {"field": {"Name": "notes_c"}},
-          {"field": {"Name": "created_at_c"}},
-          {"field": {"Name": "last_contact_c"}}
+{"field": {"Name": "created_at_c"}},
+          {"field": {"Name": "last_contact_c"}},
+          {"field": {"Name": "next_follow_up_date_c"}}
         ]
       };
       
@@ -63,8 +64,9 @@ const contactService = {
           {"field": {"Name": "status_c"}},
           {"field": {"Name": "tags_c"}},
           {"field": {"Name": "notes_c"}},
-          {"field": {"Name": "created_at_c"}},
-          {"field": {"Name": "last_contact_c"}}
+{"field": {"Name": "created_at_c"}},
+          {"field": {"Name": "last_contact_c"}},
+          {"field": {"Name": "next_follow_up_date_c"}}
         ]
       };
       
@@ -103,8 +105,9 @@ const contactService = {
             pin_code_c: contactData.pin_code_c || '',
             linkedin_url_c: contactData.linkedin_url_c || '',
             status_c: contactData.status_c,
-            tags_c: tagsString,
-            notes_c: contactData.notes_c || ''
+tags_c: tagsString,
+            notes_c: contactData.notes_c || '',
+            next_follow_up_date_c: contactData.next_follow_up_date_c || ''
           }
         ]
       };
@@ -202,9 +205,9 @@ const responseData = result;
         updateFields.tags_c = Array.isArray(contactData.tags_c) 
           ? contactData.tags_c.join(',') 
           : contactData.tags_c;
-      }
+}
       if (contactData.notes_c !== undefined) updateFields.notes_c = contactData.notes_c;
-      
+      if (contactData.next_follow_up_date_c !== undefined) updateFields.next_follow_up_date_c = contactData.next_follow_up_date_c;
       const params = {
         records: [updateFields]
       };

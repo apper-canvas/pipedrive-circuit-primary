@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-toastify";
+import contactService from "@/services/api/contactService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
-import contactService from "@/services/api/contactService";
 
 const ContactFormModal = ({ contact, onClose, onSave }) => {
 const [formData, setFormData] = useState({
@@ -20,7 +20,8 @@ const [formData, setFormData] = useState({
     linkedin_url_c: "",
     status_c: "lead",
     tags_c: "",
-    notes_c: ""
+notes_c: "",
+    next_follow_up_date_c: ""
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -40,7 +41,8 @@ useEffect(() => {
         linkedin_url_c: contact.linkedin_url_c || "",
         status_c: contact.status_c || "lead",
         tags_c: contact.tags_c || "",
-        notes_c: contact.notes_c || ""
+notes_c: contact.notes_c || "",
+        next_follow_up_date_c: contact.next_follow_up_date_c || ""
       });
     }
   }, [contact]);
@@ -266,13 +268,21 @@ name="tags_c"
                 placeholder="enterprise, tech, saas (comma-separated)"
               />
 
-              <FormField
+<FormField
                 label="Notes"
-name="notes_c"
+                name="notes_c"
                 type="textarea"
                 value={formData.notes_c}
                 onChange={handleChange}
                 placeholder="Add any relevant notes about this contact..."
+              />
+
+              <FormField
+                label="Next Follow Up Date"
+                type="date"
+                name="next_follow_up_date_c"
+                value={formData.next_follow_up_date_c}
+                onChange={handleChange}
               />
             </div>
 
