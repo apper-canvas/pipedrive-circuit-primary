@@ -20,6 +20,7 @@ const [formData, setFormData] = useState({
     linkedin_url_c: "",
     status_c: "lead",
     tags_c: "",
+    tasks_c: "",
 notes_c: "",
     next_follow_up_date_c: ""
   });
@@ -41,6 +42,7 @@ useEffect(() => {
         linkedin_url_c: contact.linkedin_url_c || "",
         status_c: contact.status_c || "lead",
         tags_c: contact.tags_c || "",
+        tasks_c: contact.tasks_c || "",
 notes_c: contact.notes_c || "",
         next_follow_up_date_c: contact.next_follow_up_date_c || ""
       });
@@ -284,8 +286,17 @@ name="tags_c"
                 value={formData.next_follow_up_date_c}
                 onChange={handleChange}
               />
-            </div>
+</div>
 
+            <FormField
+              label="Associated Task"
+              name="tasks_c"
+              type="select"
+              value={formData.tasks_c}
+              onChange={handleChange}
+              placeholder="Select a task"
+              options={[]}
+            />
             <div className="flex gap-3 mt-6">
               <Button
                 type="submit"
