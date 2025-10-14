@@ -472,19 +472,19 @@ name="deal_id_c"
                     </Select>
                   </div>
 
-                  <div>
-<label className="block text-sm font-medium text-secondary mb-2">
+<div>
+                    <label className="block text-sm font-medium text-secondary mb-2">
                       Contact
                     </label>
                     <Select
-                      name="ContactId_c"
-                      value={formData.ContactId_c}
+                      name="contact_id_c"
+                      value={formData.contact_id_c}
                       onChange={handleInputChange}
                     >
                       <option value="">Select Contact</option>
                       {contacts.map(contact => (
                         <option key={contact.Id} value={contact.Id}>
-                          {contact.FirstName} {contact.LastName}
+                          {contact.first_name_c} {contact.last_name_c}
                         </option>
                       ))}
                     </Select>
