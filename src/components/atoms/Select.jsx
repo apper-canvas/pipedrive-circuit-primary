@@ -3,6 +3,7 @@ import { cn } from "@/utils/cn";
 
 const Select = forwardRef(({ 
   children,
+  options,
   className,
   error,
   ...props 
@@ -19,7 +20,9 @@ const Select = forwardRef(({
       className={cn(baseStyles, stateStyles, className)}
       {...props}
     >
-      {children}
+      {options ? options.map((option, index) => (
+        <option key={index} value={option.value}>{option.label}</option>
+      )) : children}
     </select>
   );
 });
