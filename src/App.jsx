@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import Tasks from '@/components/pages/Tasks';
 import { ToastContainer } from "react-toastify";
 import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -122,6 +123,7 @@ function App() {
           <Route path="quotes" element={<Quotes />} />
           <Route path="orders" element={<Orders />} />
           <Route path="contacts" element={<Contacts />} />
+          <Route path="tasks" element={<Tasks />} />
           <Route path="companies" element={<Companies />} />
           <Route path="settings" element={<Settings />} />
         </Route>

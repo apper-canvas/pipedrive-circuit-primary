@@ -6,27 +6,29 @@ import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
 import dealService from "@/services/api/dealService";
 import activityService from "@/services/api/activityService";
+import taskService from "@/services/api/taskService";
 import Loading from "@/components/ui/Loading";
-
 const ContactModal = ({ contact, onClose }) => {
   const [activeTab, setActiveTab] = useState("info");
   const [deals, setDeals] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    loadContactData();
+loadContactData();
   }, [contact.Id]);
 
   const loadContactData = async () => {
     setLoading(true);
     try {
-      const [dealsData, activitiesData] = await Promise.all([
+      const [dealsData, activitiesData, tasksData] = await Promise.all([
         dealService.getByContactId(contact.Id),
-        activityService.getByContactId(contact.Id)
+        activityService.getByContactId(contact.Id),
+        taskService.getByContactId(contact.Id)
       ]);
       setDeals(dealsData);
       setActivities(activitiesData);
+      setTasks(tasksData);
     } catch (error) {
       console.error("Error loading contact data:", error);
     } finally {
@@ -34,9 +36,10 @@ const ContactModal = ({ contact, onClose }) => {
     }
   };
 
-  const tabs = [
+const tabs = [
     { id: "info", label: "Information", icon: "User" },
     { id: "deals", label: "Deals", icon: "TrendingUp" },
+    { id: "tasks", label: "Tasks", icon: "CheckSquare" },
     { id: "activity", label: "Activity", icon: "Activity" }
   ];
 
@@ -265,6 +268,60 @@ key={deal.Id}
                     ) : (
                       <div className="text-center py-8 text-gray-500">
                         No deals associated with this contact
+                      </div>
+                    )}
+                  </div>
+                )}
+{activeTab === "tasks" && (
+                  <div className="space-y-3">
+                    {tasks.length > 0 ? (
+                      tasks.map((task) => (
+                        <div
+                          key={task.Id}
+                          className="flex gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                            <ApperIcon
+                              name="CheckSquare"
+                              size={20}
+                              className="text-primary"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <p className="text-sm font-medium text-gray-900">
+                                {task.name_c || task.Name}
+                              </p>
+                              <Badge variant={
+                                task.status_c === "Completed" ? "success" :
+                                task.status_c === "InProgress" ? "warning" :
+                                task.status_c === "Blocked" ? "error" : "info"
+                              }>
+                                {task.status_c}
+                              </Badge>
+                              <Badge variant={
+                                task.priority_c === "High" ? "error" :
+                                task.priority_c === "Medium" ? "warning" : "default"
+                              }>
+                                {task.priority_c}
+                              </Badge>
+                            </div>
+                            {task.description_c && (
+                              <p className="text-xs text-gray-600 mb-1">
+                                {task.description_c}
+                              </p>
+                            )}
+                            {task.due_date_c && (
+                              <p className="text-xs text-gray-500">
+                                Due: {format(new Date(task.due_date_c), "MMM d, yyyy")}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8 text-gray-500">
+                        No tasks associated with this contact
                       </div>
                     )}
                   </div>
