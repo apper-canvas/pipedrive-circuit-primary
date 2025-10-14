@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-toastify";
 import contactService from "@/services/api/contactService";
+import taskService from "@/services/api/taskService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import FormField from "@/components/molecules/FormField";
@@ -25,7 +26,9 @@ notes_c: "",
     next_follow_up_date_c: ""
   });
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+const [errors, setErrors] = useState({});
+  const [tasks, setTasks] = useState([]);
+  const [tasksLoading, setTasksLoading] = useState(false);
 
 useEffect(() => {
     if (contact) {
@@ -47,7 +50,28 @@ notes_c: contact.notes_c || "",
         next_follow_up_date_c: contact.next_follow_up_date_c || ""
       });
     }
-  }, [contact]);
+}, [contact]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      setTasksLoading(true);
+      try {
+        const fetchedTasks = await taskService.getAll();
+        const taskOptions = fetchedTasks.map(task => ({
+          value: task.Id,
+          label: task.title_c || task.name_c || `Task ${task.Id}`
+        }));
+        setTasks(taskOptions);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        toast.error("Failed to load tasks");
+        setTasks([]);
+      } finally {
+        setTasksLoading(false);
+      }
+    };
+    fetchTasks();
+  }, []);
 
 const handleChange = (e) => {
     const { name, value } = e.target;
@@ -295,7 +319,7 @@ name="tags_c"
               value={formData.tasks_c}
               onChange={handleChange}
               placeholder="Select a task"
-              options={[]}
+options={tasks}
             />
             <div className="flex gap-3 mt-6">
               <Button
