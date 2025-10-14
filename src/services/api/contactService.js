@@ -10,7 +10,7 @@ const contactService = {
     try {
       const params = {
         fields: [
-          {"field": {"Name": "Id"}},
+{"field": {"Name": "Id"}},
           {"field": {"Name": "Name"}},
           {"field": {"Name": "first_name_c"}},
           {"field": {"Name": "last_name_c"}},
@@ -25,9 +25,10 @@ const contactService = {
           {"field": {"Name": "status_c"}},
           {"field": {"Name": "tags_c"}},
           {"field": {"Name": "notes_c"}},
-{"field": {"Name": "created_at_c"}},
+          {"field": {"Name": "created_at_c"}},
           {"field": {"Name": "last_contact_c"}},
-          {"field": {"Name": "next_follow_up_date_c"}}
+          {"field": {"Name": "next_follow_up_date_c"}},
+          {"field": {"Name": "tasks_c"}}
         ]
       };
       
@@ -48,7 +49,7 @@ const contactService = {
   getById: async (id) => {
     try {
       const params = {
-        fields: [
+fields: [
           {"field": {"Name": "Id"}},
           {"field": {"Name": "Name"}},
           {"field": {"Name": "first_name_c"}},
@@ -64,9 +65,10 @@ const contactService = {
           {"field": {"Name": "status_c"}},
           {"field": {"Name": "tags_c"}},
           {"field": {"Name": "notes_c"}},
-{"field": {"Name": "created_at_c"}},
+          {"field": {"Name": "created_at_c"}},
           {"field": {"Name": "last_contact_c"}},
-          {"field": {"Name": "next_follow_up_date_c"}}
+          {"field": {"Name": "next_follow_up_date_c"}},
+          {"field": {"Name": "tasks_c"}}
         ]
       };
       
