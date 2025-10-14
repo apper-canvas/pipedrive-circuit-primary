@@ -1,3 +1,4 @@
+import React from "react";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
@@ -28,111 +29,114 @@ const OrderModal = ({ order, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900">Order Details</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <ApperIcon name="X" size={24} />
-          </button>
+    <div
+    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div
+        className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div
+            className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-900">Order Details</h2>
+            <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-gray-600 transition-colors">
+                <ApperIcon name="X" size={24} />
+            </button>
         </div>
-
         <div className="p-6 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Order Number
-              </label>
-              <p className="text-gray-900">{order.order_number_c || "N/A"}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Order Number
+                                      </label>
+                    <p className="text-gray-900">{order.order_number_c || "N/A"}</p>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Deal
+                                      </label>
+                    <p className="text-gray-900">{order.deal_id_c?.Name || "N/A"}</p>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-500 mb-1">Quote
+                                      </label>
+                    <p className="text-gray-900">{order.quote_id_c?.Name || "N/A"}</p>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Contact
+                                      </label>
+                    <p className="text-gray-900">{order.contact_id_c?.Name || "N/A"}</p>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Order Date
+                                      </label>
+                    <p className="text-gray-900">{formatDate(order.order_date_c)}</p>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Issue Date
+                                      </label>
+                    <p className="text-gray-900">{order.issue_date_c ? formatDate(order.issue_date_c) : "Not set"}</p>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Shipping Date
+                                      </label>
+                    <p className="text-gray-900">{order.shipping_date_c ? formatDate(order.shipping_date_c) : "Not set"}</p>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Status
+                                      </label>
+                    <div>
+                        <Badge variant={getStatusColor(order.status_c)}>
+                            {order.status_c?.charAt(0).toUpperCase() + order.status_c?.slice(1)}
+                        </Badge>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Total Amount
+                                          </label>
+                        <p className="text-gray-900">{formatCurrency(order.total_amount_c)}</p>
+                    </div>
+                </div>
+                {order.notes_c && <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Notes
+                                      </label>
+                    <p className="text-gray-900 whitespace-pre-wrap">{order.notes_c}</p>
+                </div>}
+                {order.billing_address_c && <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Billing Address
+                                      </label>
+                    <p className="text-gray-900 whitespace-pre-line">{order.billing_address_c}</p>
+                </div>}
+                {order.shipping_address_c && <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Shipping Address
+                                      </label>
+                    <p className="text-gray-900 whitespace-pre-line">{order.shipping_address_c}</p>
+                </div>}
+                <div className="border-t border-gray-200 pt-6">
+                    <h3 className="text-sm font-medium text-gray-700 mb-4">System Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span className="text-gray-500">Created On:</span>
+                            <span className="ml-2 text-gray-900">{formatDate(order.CreatedOn)}</span>
+                        </div>
+                        <div>
+                            <span className="text-gray-500">Created By:</span>
+                            <span className="ml-2 text-gray-900">{order.CreatedBy?.Name || "N/A"}</span>
+                        </div>
+                        <div>
+                            <span className="text-gray-500">Modified On:</span>
+                            <span className="ml-2 text-gray-900">{formatDate(order.ModifiedOn)}</span>
+                        </div>
+                        <div>
+                            <span className="text-gray-500">Modified By:</span>
+                            <span className="ml-2 text-gray-900">{order.ModifiedBy?.Name || "N/A"}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-Deal
-              </label>
-              <p className="text-gray-900">{order.deal_id_c?.Name || "N/A"}</p>
+            <div
+                className="sticky bottom-0 bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end">
+                <Button variant="secondary" onClick={onClose}>Close
+                              </Button>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
-                Quote
-              </label>
-              <p className="text-gray-900">{order.quote_id_c?.Name || "N/A"}</p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Contact
-              </label>
-              <p className="text-gray-900">{order.contact_id_c?.Name || "N/A"}</p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Order Date
-              </label>
-              <p className="text-gray-900">{formatDate(order.order_date_c)}</p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Status
-              </label>
-              <Badge variant={getStatusColor(order.status_c)}>
-                {order.status_c || "N/A"}
-              </Badge>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Total Amount
-              </label>
-              <p className="text-gray-900 font-semibold">{formatCurrency(order.total_amount_c)}</p>
-            </div>
-          </div>
-
-          {order.notes_c && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Notes
-              </label>
-              <p className="text-gray-900 whitespace-pre-wrap">{order.notes_c}</p>
-            </div>
-          )}
-
-          <div className="border-t border-gray-200 pt-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-4">System Information</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="text-gray-500">Created On:</span>
-                <span className="ml-2 text-gray-900">{formatDate(order.CreatedOn)}</span>
-              </div>
-              <div>
-                <span className="text-gray-500">Created By:</span>
-                <span className="ml-2 text-gray-900">{order.CreatedBy?.Name || "N/A"}</span>
-              </div>
-              <div>
-                <span className="text-gray-500">Modified On:</span>
-                <span className="ml-2 text-gray-900">{formatDate(order.ModifiedOn)}</span>
-              </div>
-              <div>
-                <span className="text-gray-500">Modified By:</span>
-                <span className="ml-2 text-gray-900">{order.ModifiedBy?.Name || "N/A"}</span>
-              </div>
-            </div>
-          </div>
         </div>
-
-        <div className="sticky bottom-0 bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end">
-          <Button variant="secondary" onClick={onClose}>
-            Close
-          </Button>
-        </div>
-      </div>
-    </div>
+    </div></div>
   );
 };
 

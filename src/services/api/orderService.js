@@ -24,7 +24,11 @@ const orderService = {
           {"field": {"Name": "order_date_c"}},
           {"field": {"Name": "status_c"}},
           {"field": {"Name": "total_amount_c"}},
-          {"field": {"Name": "notes_c"}}
+{"field": {"Name": "notes_c"}},
+          {"field": {"Name": "issue_date_c"}},
+          {"field": {"Name": "shipping_date_c"}},
+          {"field": {"Name": "billing_address_c"}},
+          {"field": {"Name": "shipping_address_c"}}
         ],
         orderBy: [{"fieldName": "Id", "sorttype": "DESC"}]
       };
@@ -61,7 +65,11 @@ const orderService = {
           {"field": {"Name": "order_date_c"}},
           {"field": {"Name": "status_c"}},
           {"field": {"Name": "total_amount_c"}},
-          {"field": {"Name": "notes_c"}}
+{"field": {"Name": "notes_c"}},
+          {"field": {"Name": "issue_date_c"}},
+          {"field": {"Name": "shipping_date_c"}},
+          {"field": {"Name": "billing_address_c"}},
+          {"field": {"Name": "shipping_address_c"}}
         ]
       };
       
@@ -91,7 +99,11 @@ const orderService = {
             order_date_c: orderData.order_date_c,
             status_c: orderData.status_c,
             total_amount_c: parseFloat(orderData.total_amount_c),
-            notes_c: orderData.notes_c || ''
+notes_c: orderData.notes_c || '',
+            issue_date_c: orderData.issue_date_c || '',
+            shipping_date_c: orderData.shipping_date_c || '',
+            billing_address_c: orderData.billing_address_c || '',
+            shipping_address_c: orderData.shipping_address_c || ''
           }
         ]
       };
@@ -137,8 +149,11 @@ const orderService = {
       if (orderData.status_c !== undefined) updateFields.status_c = orderData.status_c;
       if (orderData.total_amount_c !== undefined) updateFields.total_amount_c = parseFloat(orderData.total_amount_c);
       if (orderData.notes_c !== undefined) updateFields.notes_c = orderData.notes_c;
-      if (orderData.Name !== undefined) updateFields.Name = orderData.Name;
-      
+if (orderData.Name !== undefined) updateFields.Name = orderData.Name;
+      if (orderData.issue_date_c !== undefined) updateFields.issue_date_c = orderData.issue_date_c;
+      if (orderData.shipping_date_c !== undefined) updateFields.shipping_date_c = orderData.shipping_date_c;
+      if (orderData.billing_address_c !== undefined) updateFields.billing_address_c = orderData.billing_address_c;
+      if (orderData.shipping_address_c !== undefined) updateFields.shipping_address_c = orderData.shipping_address_c;
       const params = {
         records: [updateFields]
       };

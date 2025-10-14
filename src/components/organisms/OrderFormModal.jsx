@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import orderService from "@/services/api/orderService";
-import dealService from "@/services/api/dealService";
-import contactService from "@/services/api/contactService";
 import quoteService from "@/services/api/quoteService";
+import dealService from "@/services/api/dealService";
+import orderService from "@/services/api/orderService";
+import contactService from "@/services/api/contactService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
+import Input from "@/components/atoms/Input";
 
 const OrderFormModal = ({ order, onClose, onSuccess }) => {
   const isEditMode = !!order;
@@ -18,8 +18,12 @@ const [formData, setFormData] = useState({
     contact_id_c: "",
     quote_id_c: "",
     order_date_c: "",
+    issue_date_c: "",
+    shipping_date_c: "",
     status_c: "draft",
     total_amount_c: "",
+    billing_address_c: "",
+    shipping_address_c: "",
     notes_c: ""
   });
   
@@ -43,14 +47,18 @@ const [deals, setDeals] = useState([]);
 
   useEffect(() => {
 if (order) {
-      setFormData({
+setFormData({
         order_number_c: order.order_number_c || "",
         deal_id_c: order.deal_id_c?.Id || order.deal_id_c || "",
         contact_id_c: order.contact_id_c?.Id || order.contact_id_c || "",
         quote_id_c: order.quote_id_c?.Id || order.quote_id_c || "",
         order_date_c: order.order_date_c || "",
+        issue_date_c: order.issue_date_c || "",
+        shipping_date_c: order.shipping_date_c || "",
         status_c: order.status_c || "draft",
         total_amount_c: order.total_amount_c || "",
+        billing_address_c: order.billing_address_c || "",
+        shipping_address_c: order.shipping_address_c || "",
         notes_c: order.notes_c || ""
       });
     }
@@ -64,11 +72,9 @@ const [dealsData, contactsData, quotesData] = await Promise.all([
         contactService.getAll(),
         quoteService.getAll()
       ]);
-      setDeals(dealsData);
+setDeals(dealsData);
       setContacts(contactsData);
       setQuotes(quotesData);
-      setDeals(dealsData);
-      setContacts(contactsData);
     } catch (err) {
       toast.error("Failed to load form data");
     } finally {
@@ -216,17 +222,39 @@ const contactOptions = [
                 required
               />
             </div>
+<div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Issue Date
+              </label>
+              <Input
+                type="date"
+                name="issue_date_c"
+                value={formData.issue_date_c}
+                onChange={handleChange}
+              />
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Status <span className="text-red-500">*</span>
+                Shipping Date
+              </label>
+              <Input
+                type="date"
+                name="shipping_date_c"
+                value={formData.shipping_date_c}
+                onChange={handleChange}
+              />
+            </div>
+
+<div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Status
               </label>
               <Select
                 name="status_c"
                 value={formData.status_c}
                 onChange={handleChange}
                 options={statusOptions}
-                required
               />
             </div>
 
@@ -244,6 +272,33 @@ const contactOptions = [
                 required
               />
             </div>
+<div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Billing Address
+              </label>
+              <textarea
+                name="billing_address_c"
+                value={formData.billing_address_c}
+                onChange={handleChange}
+                rows="3"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="Enter billing address"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Shipping Address
+              </label>
+              <textarea
+                name="shipping_address_c"
+                value={formData.shipping_address_c}
+                onChange={handleChange}
+                rows="3"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="Enter shipping address"
+              />
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -253,12 +308,11 @@ const contactOptions = [
                 name="notes_c"
                 value={formData.notes_c}
                 onChange={handleChange}
-                rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="Add any additional notes..."
+                rows="3"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
-
+            </div>
             <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
               <Button type="button" variant="secondary" onClick={onClose}>
                 Cancel
