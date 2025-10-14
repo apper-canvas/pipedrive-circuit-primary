@@ -10,6 +10,7 @@ import Pipeline from "@/components/pages/Pipeline";
 import Contacts from "@/components/pages/Contacts";
 import Companies from "@/components/pages/Companies";
 import Quotes from "@/components/pages/Quotes";
+import Orders from "@/components/pages/Orders";
 import Settings from "@/components/pages/Settings";
 import Login from "@/components/pages/Login";
 import Signup from "@/components/pages/Signup";
@@ -117,8 +118,9 @@ function App() {
         <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
 <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
-          <Route path="pipeline" element={<Pipeline />} />
+<Route path="pipeline" element={<Pipeline />} />
           <Route path="quotes" element={<Quotes />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="contacts" element={<Contacts />} />
           <Route path="companies" element={<Companies />} />
           <Route path="settings" element={<Settings />} />
